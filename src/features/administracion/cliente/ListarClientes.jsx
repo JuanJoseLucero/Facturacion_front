@@ -1,10 +1,19 @@
 import React from "react";
 import { getAuthToken } from "../../auth/authService";
 import { getClients } from "../../../services/apiBack";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 export default function ListarClientes() {
   const data = useLoaderData();
+  const navigate = useNavigate();
+
+  function handleEditar(cliente) {
+    try {
+      return navigate(`/cliente/editar/${cliente.cpersona}`);
+    } catch (Error) {
+      console.error(Error);
+    }
+  }
 
   if (!data || !data.clientes) {
     return <div> No se encontraton clientes</div>;
@@ -62,10 +71,6 @@ export async function loader() {
     console.error(error);
     return null;
   }
-}
-
-function handleEditar(cliente) {
-  console.log("Editar cliente:", cliente);
 }
 
 function handleEliminar(cliente) {

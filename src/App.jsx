@@ -3,6 +3,7 @@ import Home from "./ui/Home";
 import Emisor from "./features/configuracion/Emisor";
 import NuevoCliente, {
   action as NuevoClienteAction,
+  loader as loaderEditarCliente,
 } from "./features/administracion/cliente/NuevoCliente";
 import AppLayout from "./ui/AppLayout";
 import NuevoProducto, {
@@ -41,6 +42,12 @@ const router = createBrowserRouter([
             path: "/cliente/nuevocliente",
             element: <NuevoCliente />,
             action: NuevoClienteAction,
+          },
+          {
+            path: "/cliente/editar/:id",
+            element: <NuevoCliente />,
+            action: NuevoClienteAction,
+            loader: loaderEditarCliente,
           },
           {
             path: "/cliente/listarClientes",

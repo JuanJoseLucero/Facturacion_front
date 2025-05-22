@@ -197,3 +197,22 @@ export async function updateProduct(producto) {
     return null;
   }
 }
+
+export async function getCliente4Id(persona) {
+  try {
+    const data = await fetch(`${API_URL}persona/findPersonById`, {
+      method: "POST",
+      body: JSON.stringify(persona),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!data.ok) throw Error;
+    const res = data.json();
+    return res;
+  } catch (Error) {
+    console.error(Error);
+    return null;
+  }
+}

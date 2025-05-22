@@ -9,8 +9,6 @@ import { getAuthToken } from "../../auth/authService";
 
 export default function NuevoProducto() {
   const producto = useLoaderData();
-  console.log("PRODUCTO");
-  console.log(producto);
   const { id } = useParams();
   return (
     <div>
@@ -99,8 +97,6 @@ export async function action({ request }) {
 }
 
 export async function loader({ params }) {
-  console.log("entro al loader");
-  console.log(params.id);
   if (!params.id) {
     return {
       cproducto: "",

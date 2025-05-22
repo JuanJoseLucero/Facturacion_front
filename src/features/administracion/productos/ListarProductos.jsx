@@ -12,9 +12,6 @@ export default function ListarProductos() {
 
   function handleEditar(producto) {
     try {
-      console.log("Hola Handler");
-      console.log(producto);
-      console.log(`/producto/editar/${producto.cproducto}`);
       return navigate(`/producto/editar/${producto.cproducto}`);
     } catch (Error) {
       console.error(Error);

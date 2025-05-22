@@ -1,16 +1,27 @@
 import React from "react";
-import { Form, redirect } from "react-router-dom";
-import { createClient } from "../../../services/apiBack";
+import { Form, redirect, useLoaderData } from "react-router-dom";
+import { createClient, getCliente4Id } from "../../../services/apiBack";
+import { getAuthToken } from "../../auth/authService";
 
 export default function NuevoCliente() {
+  const cliente = useLoaderData();
   return (
     <div>
       <Form method="POST">
         Apellidos y Nombres/ Razon Social:{" "}
-        <input type="text" name="nombres"></input>
+        <input
+          type="text"
+          name="nombres"
+          defaultValue={cliente?.nombres ?? ""}
+        ></input>
         <br />
         <br />
-        Apellidos: <input type="text" name="apellidos"></input>
+        Apellidos:{" "}
+        <input
+          type="text"
+          name="apellidos"
+          defaultValue={cliente?.apellidos ?? ""}
+        ></input>
         <br />
         <br />
         Identificación:
@@ -22,19 +33,44 @@ export default function NuevoCliente() {
         </select>
         <br />
         <br />
-        Identificación: <input type="text" name="identificacion"></input>
+        Identificación:{" "}
+        <input
+          type="text"
+          name="identificacion"
+          defaultValue={cliente?.identificacion ?? ""}
+        ></input>
         <br />
         <br />
-        Direccion: <input type="text" name="direccion"></input>
+        Direccion:{" "}
+        <input
+          type="text"
+          name="direccion"
+          defaultValue={cliente?.direccion ?? ""}
+        ></input>
         <br />
         <br />
-        Telefono convencional: <input type="text" name="telefono"></input>
+        Telefono convencional:{" "}
+        <input
+          type="text"
+          name="telefono"
+          defaultValue={cliente?.telefono ?? ""}
+        ></input>
         <br />
         <br />
-        Telefono celular:<input type="text" name="celular"></input>
+        Telefono celular:
+        <input
+          type="text"
+          name="celular"
+          defaultValue={cliente?.celular ?? ""}
+        ></input>
         <br />
         <br />
-        correo electronico:<input type="text" name="email"></input>
+        correo electronico:
+        <input
+          type="text"
+          name="email"
+          defaultValue={cliente?.email ?? ""}
+        ></input>
         <br />
         <br />
         {/**Se usar el name action y el value guardar para que en el action diferenciar que boton presiono el usuario */}
@@ -80,6 +116,28 @@ export async function action({ request }) {
     console.log("Cancelar");
     return null;
   }
-
   //return null; //Siempre el metodo action espera algo de retorno, incluso para saber que termino correctamente
+}
+
+export async function loader({ params }) {
+  try {
+    if (!params.id) {
+      return {
+        nombres: "",
+        apellidos: "",
+        identificacion: "",
+        direccion: "",
+        telefono: "",
+        celular: "",
+        email: "",
+      };
+    }
+    const token = await getAuthToken();
+    if (!token) throw new Error("No hay token disponible");
+    const parametros = { cpersona: parseFloat(params.id) };
+    const data = await getCliente4Id(parametros);
+    return data;
+  } catch (Error) {
+    console.error(Error);
+  }
 }
