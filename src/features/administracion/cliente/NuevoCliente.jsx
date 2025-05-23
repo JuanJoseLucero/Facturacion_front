@@ -1,13 +1,25 @@
 import React from "react";
-import { Form, redirect, useLoaderData } from "react-router-dom";
-import { createClient, getCliente4Id } from "../../../services/apiBack";
+import { Form, redirect, useLoaderData, useParams } from "react-router-dom";
+import {
+  createClient,
+  getCliente4Id,
+  updateClients,
+} from "../../../services/apiBack";
 import { getAuthToken } from "../../auth/authService";
 
 export default function NuevoCliente() {
   const cliente = useLoaderData();
+  console.log("DEsde el nuevo cliente");
+  console.log(cliente);
+  const { id } = useParams();
   return (
     <div>
       <Form method="POST">
+        <input
+          type="hidden"
+          name="cpersona"
+          defaultValue={cliente?.cpersona ?? ""}
+        ></input>
         Apellidos y Nombres/ Razon Social:{" "}
         <input
           type="text"
@@ -74,8 +86,8 @@ export default function NuevoCliente() {
         <br />
         <br />
         {/**Se usar el name action y el value guardar para que en el action diferenciar que boton presiono el usuario */}
-        <button name="accion" value="guardar">
-          Guardar Cliente
+        <button name="accion" value={id ? "editar" : "guardar"}>
+          {id ? "Editar cliente" : "Guardar cliente"}
         </button>
         <br />
         <br />
@@ -99,14 +111,23 @@ export async function action({ request }) {
     ...data,
     tipoPersona: data.tipoPersona === "RUC" ? "JUR" : "NAT",
     cempresa: 1,
+    cpersona: parseFloat(data.cpersona),
   };
 
   const accion = formData.get("accion");
+  console.log("ESTA ES LA ACCION");
+  console.log(accion);
 
   if (accion === "guardar") {
     console.log("Guardando");
     const responseNewCLient = await createClient(order);
     if (responseNewCLient.error == "0") {
+      return redirect(`/cliente/listarClientes`);
+    }
+    return null;
+  } else if (accion === "editar") {
+    const responseEditClient = await updateClients(order);
+    if (responseEditClient.error == "0") {
       return redirect(`/cliente/listarClientes`);
     }
     return null;

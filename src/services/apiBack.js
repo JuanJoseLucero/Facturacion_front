@@ -216,3 +216,22 @@ export async function getCliente4Id(persona) {
     return null;
   }
 }
+
+export async function updateClients(client) {
+  try {
+    const response = await fetch(`${API_URL}persona/editPerson`, {
+      method: "post",
+      body: JSON.stringify(client),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) throw Error;
+    const data = response.json();
+    return data;
+  } catch (Error) {
+    console.error(Error);
+    return null;
+  }
+}
