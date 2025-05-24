@@ -13,11 +13,26 @@ export default function NuevoProducto() {
   return (
     <div>
       <Form method="POST">
-        Código Principal{" "}
         <input
-          type="text"
+          type="hidden"
           name="cproducto"
           defaultValue={producto?.cproducto ?? ""}
+        ></input>
+        <br />
+        <br />
+        Código Principal{" "}
+        <input
+          type="hidden"
+          name="cproducto"
+          defaultValue={producto?.productosri ?? ""}
+        ></input>
+        <br />
+        <br />
+        Código Auxiliar{" "}
+        <input
+          type="hidden"
+          name="cproducto"
+          defaultValue={producto?.productosri2 ?? ""}
         ></input>
         <br />
         <br />
@@ -102,6 +117,8 @@ export async function loader({ params }) {
       cproducto: "",
       descripcion: "",
       valor: "",
+      productosri: "",
+      productosri2: "",
     };
   }
   const token = await getAuthToken();
