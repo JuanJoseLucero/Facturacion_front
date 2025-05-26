@@ -22,16 +22,16 @@ export default function NuevoProducto() {
         <br />
         Código Principal{" "}
         <input
-          type="hidden"
-          name="cproducto"
+          type="text"
+          name="productosri"
           defaultValue={producto?.productosri ?? ""}
         ></input>
         <br />
         <br />
         Código Auxiliar{" "}
         <input
-          type="hidden"
-          name="cproducto"
+          type="text"
+          name="productosri2"
           defaultValue={producto?.productosri2 ?? ""}
         ></input>
         <br />
@@ -94,7 +94,8 @@ export async function action({ request }) {
     if (accion === "guardar") {
       const responseSaveProducto = await createProduct(order);
       if (responseSaveProducto.error == "0") {
-        return redirect(`/producto/listarProductos`);
+        return null;
+        //return redirect(`/producto/listarProductos`);
       } else {
         return null;
       }
