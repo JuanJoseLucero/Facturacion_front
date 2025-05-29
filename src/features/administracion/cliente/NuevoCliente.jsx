@@ -20,7 +20,7 @@ export default function NuevoCliente() {
           name="cpersona"
           defaultValue={cliente?.cpersona ?? ""}
         ></input>
-        Apellidos y Nombres/ Razon Social:{" "}
+        Nombres/ Razon Social:{" "}
         <input
           type="text"
           name="nombres"
@@ -38,8 +38,8 @@ export default function NuevoCliente() {
         <br />
         Identificación:
         <select name="tipoIdentificacion">
-          <option value="value1">CEDULA</option>
-          <option value="value2" selected>
+          <option value="NAT">CEDULA</option>
+          <option value="JUR" selected>
             RUC
           </option>
         </select>
