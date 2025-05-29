@@ -94,8 +94,7 @@ export async function action({ request }) {
     if (accion === "guardar") {
       const responseSaveProducto = await createProduct(order);
       if (responseSaveProducto.error == "0") {
-        return null;
-        //return redirect(`/producto/listarProductos`);
+        return redirect(`/producto/listarProductos`);
       } else {
         return null;
       }

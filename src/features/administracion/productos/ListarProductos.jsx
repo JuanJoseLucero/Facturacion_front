@@ -24,7 +24,8 @@ export default function ListarProductos() {
       <table border="1" cellPadding="5" cellSpacing="0">
         <thead>
           <tr>
-            <th>Código</th>
+            <th>Código SRI</th>
+            <th>Código SRI Auxiliar</th>
             <th>Descripción</th>
             <th>Valor</th>
             <th>Iva</th>
@@ -33,7 +34,8 @@ export default function ListarProductos() {
         <tbody>
           {data.lstProductos.map((producto) => (
             <tr key={producto.cproducto}>
-              <td>{producto.cproducto}</td>
+              <td>{producto.productosri}</td>
+              <td>{producto.productosri2}</td>
               <td>{producto.descripcion}</td>
               <td>{producto.valor}</td>
               <td>{producto.iva}</td>
