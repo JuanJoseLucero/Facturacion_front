@@ -24,6 +24,7 @@ export default function Factura() {
   const [subtotal0, setSubtotal0] = useState(0);
   const [valorTotal, setValorTotal] = useState(0);
   const [cpersonaCliente, setCpersonaCliente] = useState(null);
+  const [formaPago, setFormaPago] = useState(0);
 
   useEffect(() => {
     const sumaValorUnitario = rowsDetalle.reduce(
@@ -103,6 +104,15 @@ export default function Factura() {
     }
   };
 
+  const handleFormaPago = (event) => {
+    const value = event.target.value;
+    const text = event.target.options[event.target.selectedIndex].text;
+    setFormaPago(value);
+    console.log("Valor:", value);
+    console.log("Texto:", text);
+    console.log("Opción completa:", { value, text });
+  };
+
   const createFactura = async () => {
     try {
       const factura = {
@@ -118,12 +128,17 @@ export default function Factura() {
         infoFactura: {
           identificacionComprador: identificacion,
         },
+        formaPago: {
+          codformaPago: formaPago,
+        },
       };
       console.log("Factura a enviar:", factura);
       const data = await sendFactura(factura);
       console.log(data);
       if (data.error === "0" && data.ride) {
         descargarPDF(data.ride, "factura.pdf");
+      } else {
+        window.alert(data.mensaje);
       }
     } catch (error) {
       console.log("Error al buscar comprador:", error);
@@ -285,9 +300,10 @@ export default function Factura() {
       Formas de Pago:
       <br />
       <br />
-      <select name="button">
-        <option value="1">Efectivo</option>
-        <option value="2">Con utilización del sistema financiero</option>
+      <select name="button" value={formaPago} onChange={handleFormaPago}>
+        <option value="">-- SELECCIONE UNA OPCION --</option>
+        <option value="01">SIN UTILIZACION DEL SISTEMA FINANCIERO</option>
+        <option value="20">OTROS CON UTILIZACION DEL SISTEMA FINANCIERO</option>
       </select>
       <br />
       <br />
