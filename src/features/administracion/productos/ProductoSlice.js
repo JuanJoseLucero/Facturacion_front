@@ -1,3 +1,5 @@
+import { createStore } from "redux";
+
 const initialState = {
   codigoSri: "",
   descripcion: "",
@@ -33,3 +35,10 @@ export function createProduct(codigoSri, descripcion, valor, iva) {
  * Configurar el store de redux,
  * Y llamar desde la interfaz
  */
+
+const store = createStore(productoReducer);
+store.dispatch({
+  type: "",
+  payload: { codigoSri: "abc", descripcion: "123", valor: 0, iva: 0 },
+});
+console.log(store.getState());
